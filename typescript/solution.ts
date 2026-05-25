@@ -76,3 +76,26 @@ function decryptPair(
 
     return square[first.row][second.col] + square[second.row][first.col];
 }
+
+function decrypt(cipherText: string, key: string): string {
+  const square = buildKeySquare(key);
+  const positions = buildPositionMap(square);
+  const normalizedCipher = normalizeText(cipherText);
+
+  if (normalizedCipher.length % 2 !== 0) {
+    throw new Error("Cipher text must contain an even number of characters.");
+  }
+
+  let plaintext = "";
+
+  for (let i = 0; i < normalizedCipher.length; i += 2) {
+    plaintext += decryptPair(
+      normalizedCipher[i],
+      normalizedCipher[i + 1],
+      square,
+      positions
+    );
+  }
+  // Remove 'X' and any non-alphabetic characters from the plaintext
+  return plaintext.replace(/X/g, "").replace(/[^A-Z]/g, "");
+}
