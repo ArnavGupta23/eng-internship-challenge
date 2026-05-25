@@ -27,7 +27,7 @@ function buildKeySquare(key: string): string[][] {
 
     const square: string[][] = [];
 
-    for (let row = 0; row < SIZE; row += 1) {
+    for (let row = 0; row < SIZE; row++) {
         square.push(squareChars.slice(row * SIZE, (row + 1) * SIZE));
     }
 
