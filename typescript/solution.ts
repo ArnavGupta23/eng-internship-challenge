@@ -1,4 +1,4 @@
-type position = {
+type Position = {
     row: number;
     col: number;
 }
@@ -33,3 +33,16 @@ function buildKeySquare(key: string): string[][] {
 
     return square;
 }
+
+function buildPositionMap(square: string[][]): Map<string, Position> {
+    const positions = new Map<string, Position>();
+
+    for (let row = 0; row < SIZE; row++) {
+        for (let col = 0; col < SIZE; col++) {
+            positions.set(square[row][col], { row, col });
+        }
+    }
+
+    return positions;
+}
+
