@@ -46,3 +46,33 @@ function buildPositionMap(square: string[][]): Map<string, Position> {
     return positions;
 }
 
+function decryptPair(
+    a: string,
+    b: string,
+    square: string[][],
+    positions: Map<string, Position>
+): string {
+    const first = positions.get(a);
+    const second = positions.get(b);
+
+    if (!first || !second) {
+        throw new Error("Both characters must exist in the key square");
+    }
+
+    // Same row shifts left, same column shifts up, otherwise swap columns.
+    if (first.row === second.row) {
+        return (
+            square[first.row][(first.col + SIZE - 1) % SIZE] +
+            square[second.row][(second.col + SIZE - 1) % SIZE]
+        );
+    }
+
+    if (first.col === second.col) {
+        return (
+            square[(first.row + SIZE - 1) % SIZE][first.col] +
+            square[(second.row + SIZE - 1) % SIZE][second.col]
+        );
+    }
+
+    return square[first.row][second.col] + square[second.row][first.col];
+}
